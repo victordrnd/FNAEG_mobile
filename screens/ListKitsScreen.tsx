@@ -4,7 +4,7 @@ import { StatusBar, View, StyleSheet, Image } from 'react-native';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import styles from '../assets/styles/styles';
 import Icon from 'react-native-vector-icons/Feather';
-
+import KitService from '../services/KitService';
 interface NavigationParams {
 }
 
@@ -15,23 +15,30 @@ interface Props {
 }
 
 
-export class HomeScreen extends React.Component<Props> {
 
+
+
+
+export class ListKitScreen extends React.Component<Props> {
+    kits;
+    state
+    componentDidMount(){
+        KitService.getAllKit((kits) =>{
+            this.kits = kits;
+        });
+    }
 
 
     render() {
+        const { navigate } = this.props.navigation;
         return (
             <View>
 
                 <StatusBar backgroundColor='#ebecf1' barStyle='dark-content'></StatusBar>
                 <Image source={require("../assets/logo-dark.png")} style={{width : 100, height : 100, alignSelf : "center"}}></Image>
-                <Text style={styles.titleDark}>Bienvenue sur l'application de gestion des stocks FNAEG</Text>
-                <Text style={[styles.subtitle, {textAlign : "center"}]}>Gérez les stocks de kits pour le laboratoire FNAEG</Text>
-                <Image source={ require('../assets/note-yellow.png')} style={{width:240, height : 240, alignSelf : "center", marginTop : 100}}></Image>
-                <Button title="Réaliser un nouvel inventaire" icon={<Icon name="arrow-right" color="#fff" size={18}></Icon>}
-                 iconRight titleStyle={styles.buttonText} buttonStyle={[styles.button, {marginTop : 150}]}
-                 onPress={()=> {this.props.navigation.navigate('Stock')}}></Button>
+                <Text style={styles.titleDark}>Bienvenue sur l'application FNAEG</Text>
                 
+
             </View>
         );
     }
