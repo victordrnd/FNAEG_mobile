@@ -30,6 +30,14 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontFamily : "ProductSansItalic"
     },
+    listTitle : {
+        color : "#000",
+        fontFamily : "ProductSansBold"
+    },
+    listText : {
+        color : "#000",
+        fontFamily : "ProductSansRegular"
+    }
 });
 
 

@@ -7,6 +7,7 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import LottieView from 'lottie-react-native';
 import styles from '../assets/styles/styles';
 interface NavigationParams {
+    kit
 }
 
 type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;
@@ -26,9 +27,14 @@ const options = {
 export class CompteurScreen extends React.Component<Props> {
     animation
     componentDidMount() {
+        this.setState({ kit : this.props.navigation.getParam("kit"), count : this.props.navigation.getParam("kit").Stock});
     }
     state = {
-        count: 0
+        count: 0,
+        kit : {
+            CodeKit : null,
+            Stock : 0
+        }
     }
 
 
@@ -39,12 +45,19 @@ export class CompteurScreen extends React.Component<Props> {
         this.setState({ count: this.state.count += 1 });
     }
 
+    _onPress = () => {
+        this.state.kit.Stock = this.state.count;
+        this.props.navigation.state.params.onValidate(this.state.kit);
+        this.props.navigation.goBack();
+    }
+
     render() {
         const { navigate } = this.props.navigation;
+        const {kit} = this.state;
         return (
             <View>
 
-                <StatusBar backgroundColor='#ebecf1' barStyle='dark-content'></StatusBar>
+                <StatusBar backgroundColor='#fff' barStyle='dark-content'></StatusBar>
                 <View style={{ flex: 1, flexDirection: "column", justifyContent: "space-between" }}>
 
                     <View style={{ flex: 1, flexDirection: "row" }}>
@@ -57,13 +70,15 @@ export class CompteurScreen extends React.Component<Props> {
                         </View>
                         <View style={{ flex: 1 }}>
 
-                            <Icon name="check" size={24} color="#000" style={styles2.validate}></Icon>
+                            <Icon name="check" size={24} color="#000" style={styles2.validate} onPress={()=> this._onPress()}></Icon>
                         </View>
                     </View>
                     <View style={{ flex: 1 }}>
 
                         <Text style={[styles.titleDark, { textAlign: "center", marginTop: 100 }]}>Inventaire du kit</Text>
-                        <Text style={[styles.titleDark, { textAlign: "center", fontSize: 25 }]}>K001</Text>
+                        <Text style={[styles.titleDark, { textAlign: "center", fontSize: 25 }]}>
+                                {kit.CodeKit}
+                            </Text>
 
                     </View>
                     <View style={{ flex: 1 }}>

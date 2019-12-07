@@ -13,10 +13,11 @@ import { HomeScreen } from './screens/HomeScreen';
 import NavigationService from './services/NavigationService';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { CompteurScreen } from './screens/CompteurScreen';
+import { ListKitScreen } from './screens/ListKitsScreen';
 
-//TODO delete
-// AsyncStorage.clear();
+
 export default class App extends React.Component {
+
 
   render() {
     return (
@@ -42,7 +43,7 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
       }
     },
     Stock: {
-      screen: CompteurScreen,
+      screen: ListKitScreen,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <View style={{backgroundColor : tintColor, borderRadius : 10, padding : 7, width: 40, marginTop : -7}}>
@@ -59,16 +60,16 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
             <Icon style={{ color: "#000", textAlign : "center"}} name="clipboard" size={20}></Icon>
           </View>
         ),
-        tabBarBadge : true
+        tabBarBadge : 2,
       }
     },
   },
   {
     initialRouteName: 'Home',
-    activeColor: '#ebecf1',
+    activeColor: '#f1f3f6',
     inactiveColor: '#fff',
     labeled: false,
-    barStyle: { backgroundColor: '#fff'},
+    barStyle: { backgroundColor: '#fff',position : "absolute"},
   },
 );
 
@@ -85,7 +86,7 @@ const theme = {
     ...DefaultTheme.colors,
     primary: '#222a5b',
     accent: '#f1c40f',
-    background: '#ebecf1'
+    background: '#f1f3f6'
   },
 };
 
@@ -95,7 +96,15 @@ const theme = {
 AppNavigator = createAppContainer(createAnimatedSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
-    App: bottomTabNavigator,
+    App: createStackNavigator({
+      App : bottomTabNavigator,
+      Compteur : CompteurScreen
+    },
+    {
+      headerMode :'none'
+    }
+    ),
+    
   },
   {
     initialRouteName: 'AuthLoading',
