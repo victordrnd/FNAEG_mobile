@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { Text, Button } from 'react-native-elements';
-import { StatusBar, View, StyleSheet, Image } from 'react-native';
+import { StatusBar, View, StyleSheet, Image, Alert } from 'react-native';
 import { NavigationScreenProp, NavigationState, FlatList } from 'react-navigation';
 import styles from '../assets/styles/styles';
 import Icon from 'react-native-vector-icons/Feather';
 import KitService from '../services/KitService';
 import { List, Badge } from 'react-native-paper';
 import NavigationService from '../services/NavigationService';
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import Header from '../components/Header'
 interface NavigationParams {
 }
 
@@ -56,6 +58,26 @@ export class ListKitScreen extends React.Component<Props> {
     }
 
 
+    _onPress(){
+        const notDone = this.state.kits.find(el => !el.done);
+        if(notDone){
+            Alert.alert(
+                'Avertissement',
+                "Certains kits n'ont pas été comptés, souhaitez vous tout de même continuer ?",
+                [
+                    {
+                        text : "Cancel"
+                    },
+                    {
+                        text : "Confirmer",
+                        onPress : () => {
+                            this.props.navigation.navigate('InventaireSuccess', {kits : this.state.kits});
+                        }
+                    }
+                ]
+            )
+        }
+    }
 
     render() {
         const { navigate } = this.props.navigation;
@@ -64,20 +86,10 @@ export class ListKitScreen extends React.Component<Props> {
             <View>
 
                 <StatusBar backgroundColor='#f1f3f6' barStyle='dark-content'></StatusBar>
-                <View style={{ flex: 1, flexDirection: "row"}}>
-                    <View style={{ flex: 1 }}>
-
-                    </View>
-                    <View style={{ flex: 3 }}>
-
-                        <Text style={[styles.titleDark, {marginTop : 35}]}>Inventaire des kits</Text>
-                    </View>
-                    <View style={{ flex: 1 }}>
-
-                        <Icon name="check" size={24} color="#000" style={styles2.validate} onPress={() => this._onPress()}></Icon>
-                    </View>
-                </View>
-                <View style={{ paddingHorizontal: 15, marginTop :100 }}>
+                <Header
+                title="Inventaire des kits"
+                right={<Icon name="save" size={20} color="#000" style={styles2.validate} onPress={() => this._onPress()}></Icon>}></Header>
+                <View style={{ paddingHorizontal: 15, marginTop: 140 }}>
 
                     <FlatList
                         data={kits}
@@ -94,6 +106,40 @@ export class ListKitScreen extends React.Component<Props> {
 
 
     _renderItem({ item, index }) {
+        const _onPress = () => {
+            NavigationService.navigate('Compteur', {
+                kit: item,
+                index: index,
+                onValidate: async (kit) => {
+                    let kits = this.state.kits;
+                    kit.done = true;
+                    kits[index] = kit
+                    await this.setState({ kits: kits });
+                }
+            })
+        }
+
+        const _onLongPress = () => {
+            ReactNativeHapticFeedback.trigger("selection", {});
+            Alert.alert(
+                'Avertissement',
+                'Voulez vous remettre à 0 les stocks de ce kit ?',
+                [
+                    {
+                        text: 'Annuler'
+                    },
+                    {
+                        text: "Valider",
+                        onPress: async () => {
+                            let kits = this.state.kits;
+                            item.Stock = 0;
+                            kits[index] = item
+                            await this.setState({ kits: kits });
+                        }
+                    }
+                ]
+            )
+        }
         return (
 
             <List.Item
@@ -104,16 +150,8 @@ export class ListKitScreen extends React.Component<Props> {
                 titleStyle={styles.listTitle}
                 descriptionStyle={styles.subtitle}
                 style={{ marginVertical: 10, backgroundColor: "#fff", borderRadius: 10, elevation: 1 }}
-                onPress={() => NavigationService.navigate('Compteur', {
-                    kit: item,
-                    index: index,
-                    onValidate: async (kit) => {
-                        let kits = this.state.kits;
-                        kit.done = true;
-                        kits[index] = kit
-                        await this.setState({ kits: kits });
-                    }
-                })}>
+                onPress={() => _onPress()}
+                onLongPress={() => _onLongPress()}>
             </List.Item>
         )
     }
@@ -127,7 +165,7 @@ const styles2 = StyleSheet.create({
         marginRight: 30,
         backgroundColor: "#fff",
         borderRadius: 20,
-        padding: 5,
+        padding: 7,
         elevation: 3
     },
     iconButton: {

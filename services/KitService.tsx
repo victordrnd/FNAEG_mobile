@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import environment from '../environments/environment';
-
+import { Share } from "react-native";
 
 class KitService {
 
@@ -18,6 +18,17 @@ class KitService {
             .catch(error => {
                 console.info(error.response.data)
             })
+    }
+
+
+    async exportToXML(kits : Array<any>){
+        let xml = "<Kits>\n"
+        for(const kit of kits){
+            let xmlKit = `<Kit CodeKit="${kit.CodeKit}" Stock="${kit.Stock}"/>\n`;
+            xml += xmlKit
+        }
+        xml += "</Kits";
+        
     }
 
    

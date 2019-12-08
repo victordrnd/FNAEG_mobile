@@ -14,6 +14,7 @@ import NavigationService from './services/NavigationService';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { CompteurScreen } from './screens/CompteurScreen';
 import { ListKitScreen } from './screens/ListKitsScreen';
+import {InventaireSuccess} from './screens/InventaireSuccess'
 
 
 export default class App extends React.Component {
@@ -90,21 +91,18 @@ const theme = {
   },
 };
 
-
-
+const HomeNavigator = createStackNavigator({
+  App : bottomTabNavigator,
+  Compteur : CompteurScreen,
+  InventaireSuccess : InventaireSuccess
+},{
+  headerMode :'none'
+})
 
 AppNavigator = createAppContainer(createAnimatedSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
-    App: createStackNavigator({
-      App : bottomTabNavigator,
-      Compteur : CompteurScreen
-    },
-    {
-      headerMode :'none'
-    }
-    ),
-    
+    App: HomeNavigator
   },
   {
     initialRouteName: 'AuthLoading',
