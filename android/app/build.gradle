@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.gsb"
+        applicationId "com.fnaeg"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

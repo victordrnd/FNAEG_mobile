@@ -1,4 +1,4 @@
-package com.gsb;
+package com.fnaeg;
 
 import android.app.Application;
 import android.content.Context;

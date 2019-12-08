@@ -1,4 +1,4 @@
-package com.gsb;
+package com.fnaeg;
 
 import com.facebook.react.ReactActivity;
 
