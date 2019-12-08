@@ -60,6 +60,7 @@ export class ListKitScreen extends React.Component<Props> {
 
     _onPress(){
         const notDone = this.state.kits.find(el => !el.done);
+        const changePage = () => this.props.navigation.navigate('InventaireSuccess', {kits : this.state.kits});
         if(notDone){
             Alert.alert(
                 'Avertissement',
@@ -71,11 +72,13 @@ export class ListKitScreen extends React.Component<Props> {
                     {
                         text : "Confirmer",
                         onPress : () => {
-                            this.props.navigation.navigate('InventaireSuccess', {kits : this.state.kits});
+                            changePage()
                         }
                     }
                 ]
             )
+        }else{
+            changePage();
         }
     }
 

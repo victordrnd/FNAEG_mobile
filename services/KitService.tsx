@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import environment from '../environments/environment';
-import { Share } from "react-native";
+import Share from 'react-native-share';
+import base64 from 'react-native-base64';
 
 class KitService {
 
@@ -21,17 +22,18 @@ class KitService {
     }
 
 
-    async exportToXML(kits : Array<any>){
+    async exportToXML(kits: Array<any>) {
         let xml = "<Kits>\n"
-        for(const kit of kits){
+        for (const kit of kits) {
             let xmlKit = `<Kit CodeKit="${kit.CodeKit}" Stock="${kit.Stock}"/>\n`;
             xml += xmlKit
         }
-        xml += "</Kits";
-        
+        xml += "</Kits>";
+        let date = new Date().toDateString();
+        Share.open({ url: "data:text/xml;base64," + base64.encode(xml), type: 'text/xml', subject: `Export stock FNAEG ${date}`, filename: `Stock du` })
     }
 
-   
+
 
 }
 

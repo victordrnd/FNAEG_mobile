@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
-import { Image, View, Dimensions } from 'react-native';
+import { Image, View, Dimensions, StatusBar } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { Transition } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Feather';
@@ -23,6 +23,7 @@ export default class App extends React.Component {
   render() {
     return (
       <PaperProvider theme={theme}>
+        <StatusBar backgroundColor="#d8a864"></StatusBar>
         <AppContainer ref={navigatorRef => { NavigationService.setTopLevelNavigator(navigatorRef) }} />
         <OfflineNotice />
       </PaperProvider>
