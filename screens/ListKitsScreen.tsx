@@ -9,6 +9,7 @@ import { List, Badge } from 'react-native-paper';
 import NavigationService from '../services/NavigationService';
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Header from '../components/Header'
+import Kit from '../core/models/kit';
 interface NavigationParams {
 }
 
@@ -17,11 +18,6 @@ type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;
 interface Props {
     navigation: Navigation;
 }
-
-
-
-
-
 
 export class ListKitScreen extends React.Component<Props> {
 
@@ -51,16 +47,16 @@ export class ListKitScreen extends React.Component<Props> {
         ]
     }
     componentDidMount() {
-        // KitService.getAllKit((kits) =>{
+        // KitService.getAllKit((kits : Kit) =>{
         //     this.kits = kits;
         // });
-        this.state.kits.map(kit => kit.done = false)
+        this.state.kits.map((kit : Kit) => kit.done = false)
     }
 
 
     _onPress(){
-        const notDone = this.state.kits.find(el => !el.done);
-        const changePage = () => this.props.navigation.navigate('InventaireSuccess', {kits : this.state.kits});
+        const notDone = this.state.kits.find((el : Kit) => !el.done);
+        const save = () => this.props.navigation.navigate('InventaireSuccess', {kits : this.state.kits});
         if(notDone){
             Alert.alert(
                 'Avertissement',
@@ -72,18 +68,17 @@ export class ListKitScreen extends React.Component<Props> {
                     {
                         text : "Confirmer",
                         onPress : () => {
-                            changePage()
+                            save()
                         }
                     }
                 ]
             )
         }else{
-            changePage();
+            save();
         }
     }
 
     render() {
-        const { navigate } = this.props.navigation;
         const { kits } = this.state;
         return (
             <View>
@@ -108,13 +103,13 @@ export class ListKitScreen extends React.Component<Props> {
 
 
 
-    _renderItem({ item, index }) {
+    _renderItem( {item, index} ) {
         const _onPress = () => {
             NavigationService.navigate('Compteur', {
                 kit: item,
                 index: index,
                 onValidate: async (kit) => {
-                    let kits = this.state.kits;
+                    let kits : Array<Kit> = this.state.kits;
                     kit.done = true;
                     kits[index] = kit
                     await this.setState({ kits: kits });
@@ -134,7 +129,7 @@ export class ListKitScreen extends React.Component<Props> {
                     {
                         text: "Valider",
                         onPress: async () => {
-                            let kits = this.state.kits;
+                            let kits : Array<Kit> = this.state.kits;
                             item.Stock = 0;
                             kits[index] = item
                             await this.setState({ kits: kits });

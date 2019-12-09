@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import environment from '../environments/environment';
 import Share from 'react-native-share';
 import base64 from 'react-native-base64';
+import Kit from '../core/models/kit';
 
 class KitService {
 

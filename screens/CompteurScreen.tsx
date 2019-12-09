@@ -6,8 +6,9 @@ import Icon from 'react-native-vector-icons/Feather';
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import LottieView from 'lottie-react-native';
 import styles from '../assets/styles/styles';
+import Kit from '../core/models/kit';
 interface NavigationParams {
-    kit
+    kit : Kit
 }
 
 type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;

@@ -9,6 +9,7 @@ import Header from '../components/Header';
 import ActionSheet from 'react-native-actionsheet';
 import { Button } from 'react-native-elements';
 import KitService from '../services/KitService';
+import Kit from '../core/models/kit';
 
 interface NavigationParams {
     kits
@@ -27,7 +28,7 @@ interface Props {
 export class InventaireSuccess extends React.Component<Props> {
     animation;
     ActionSheet
-    kits;
+    kits : Array<Kit>;
 
     option = [
         'Export serveur',
@@ -39,6 +40,7 @@ export class InventaireSuccess extends React.Component<Props> {
     componentDidMount() {
         this.animation.play()
         this.kits = this.props.navigation.getParam("kits");
+
     }
 
 
@@ -84,7 +86,7 @@ export class InventaireSuccess extends React.Component<Props> {
 
                 <Button title="Retour vers l'accueil" icon={<Icon name="arrow-right" color="#000" size={18}></Icon>}
                     iconRight titleStyle={[styles.buttonText, { color: '#000' }]} buttonStyle={[styles.button, { marginTop: 20, backgroundColor: '#fff' }]}
-                    onPress={() => this.showActionSheet()}></Button>
+                    onPress={() => this.props.navigation.navigate('Home')}></Button>
             </View>
         );
     }
