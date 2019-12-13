@@ -22,35 +22,13 @@ interface Props {
 export class ListKitScreen extends React.Component<Props> {
 
     state = {
-        kits: [
-            {
-                CodeKit: "K001",
-                Stock: 1,
-
-            },
-            {
-                CodeKit: "K002",
-                Stock: 0,
-            },
-            {
-                CodeKit: "K003",
-                Stock: 5,
-            },
-            {
-                CodeKit: "K004",
-                Stock: 3,
-            },
-            {
-                CodeKit: "K005",
-                Stock: 1,
-            }
-        ]
+        kits: []
     }
     componentDidMount() {
-        // KitService.getAllKit((kits : Kit) =>{
-        //     this.kits = kits;
-        // });
-        this.state.kits.map((kit : Kit) => kit.done = false)
+        KitService.getAllKit((kits : Kit) => {
+            this.setState({kits : kits});
+        });
+        // this.state.kits.map((kit : Kit) => kit.done = false)
     }
 
 
@@ -142,9 +120,9 @@ export class ListKitScreen extends React.Component<Props> {
 
             <List.Item
                 title={`Kit #${item.CodeKit}`}
-                description={`Durée : 10min`}
+                description={`Durée : ${item.Duree}min`}
                 right={() => <Text style={[styles.listText, { marginVertical: 15 }]}>Qté : {item.Stock}</Text>}
-                left={() => <Badge visible style={{ marginVertical: 15, backgroundColor: item.done ? "#d8a864" : "#f1f3f6" }}><Icon name="check" color="#fff" /></Badge>}
+                left={() => <Badge visible style={{ marginVertical: 15, backgroundColor: item.done ? "#d8a864" : "#f1f3f6" }}><Icon name="check" color="#fff"/></Badge>}
                 titleStyle={styles.listTitle}
                 descriptionStyle={styles.subtitle}
                 style={{ marginVertical: 10, backgroundColor: "#fff", borderRadius: 10, elevation: 1 }}

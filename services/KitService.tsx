@@ -13,7 +13,7 @@ class KitService {
 
 
     async getAllKit(callback): Promise<any> {
-        this.http.get(`${environment.apiUrl}/kits`)
+        this.http.get(`${environment.apiUrl}/kit`)
             .then(res => {
                 callback(res.data.result)
             })

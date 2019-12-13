@@ -4,12 +4,13 @@ import { NavigationScreenProp, NavigationState } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/Feather';
 import LottieView from 'lottie-react-native';
-import styles from '../assets/styles/styles';
-import Header from '../components/Header';
+import styles from '../../assets/styles/styles';
+import Header from '../../components/Header';
 import ActionSheet from 'react-native-actionsheet';
 import { Button } from 'react-native-elements';
-import KitService from '../services/KitService';
-import Kit from '../core/models/kit';
+import KitService from '../../services/KitService';
+import Kit from '../../core/models/kit';
+import InventaireService from '../../services/InventaireService';
 
 interface NavigationParams {
     kits
@@ -28,7 +29,7 @@ interface Props {
 export class InventaireSuccess extends React.Component<Props> {
     animation;
     ActionSheet
-    kits : Array<Kit>;
+    kits: Array<Kit>;
 
     option = [
         'Export serveur',
@@ -40,7 +41,6 @@ export class InventaireSuccess extends React.Component<Props> {
     componentDidMount() {
         this.animation.play()
         this.kits = this.props.navigation.getParam("kits");
-
     }
 
 
@@ -52,8 +52,8 @@ export class InventaireSuccess extends React.Component<Props> {
     switchIndex(index) {
         switch (index) {
             case 0:
-                console.log(index)
-                alert('todo')
+                InventaireService.create(this.kits)
+                    .then(inventaire => alert("L'inventaire a correctement été envoyé !"));
                 break;
             case 1:
                 console.log('test');
@@ -70,7 +70,7 @@ export class InventaireSuccess extends React.Component<Props> {
             <View style={{ backgroundColor: '#f1f3f6', height: "100%" }}>
                 <StatusBar backgroundColor='#f1f3f6' barStyle='dark-content'></StatusBar>
                 <Header title="Inventaire terminé !"></Header>
-                <LottieView source={require('../assets/animations/page-success.json')} style={{ width: 600, alignSelf: "center", marginTop: 50 }} loop={false} ref={animation => {
+                <LottieView source={require('../../assets/animations/page-success.json')} style={{ width: 600, alignSelf: "center", marginTop: 50 }} loop={false} ref={animation => {
                     this.animation = animation;
                 }} />
                 <ActionSheet

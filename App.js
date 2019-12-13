@@ -14,9 +14,9 @@ import NavigationService from './services/NavigationService';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { CompteurScreen } from './screens/CompteurScreen';
 import { ListKitScreen } from './screens/ListKitsScreen';
-import {InventaireSuccess} from './screens/InventaireSuccess'
-
-
+import {InventaireSuccess} from './screens/inventaire/InventaireSuccess'
+import {ListInventaireScreen} from './screens/inventaire/ListInventaireScreen';
+import {DetailInventaireScreen} from './screens/inventaire/DetailInventaireScreen';
 export default class App extends React.Component {
 
 
@@ -55,14 +55,13 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
       }
     },
     Historique: {
-      screen: HomeScreen,
+      screen: ListInventaireScreen,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <View style={{backgroundColor : tintColor, borderRadius : 10, padding : 7, width: 40, marginTop : -7}}>
             <Icon style={{ color: "#000", textAlign : "center"}} name="clipboard" size={20}></Icon>
           </View>
-        ),
-        tabBarBadge : 2,
+        )
       }
     },
   },
@@ -95,7 +94,8 @@ const theme = {
 const HomeNavigator = createStackNavigator({
   App : bottomTabNavigator,
   Compteur : CompteurScreen,
-  InventaireSuccess : InventaireSuccess
+  InventaireSuccess : InventaireSuccess,
+  DetailInventaire : DetailInventaireScreen
 },{
   headerMode :'none'
 })
