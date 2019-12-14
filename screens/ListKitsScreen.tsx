@@ -71,7 +71,8 @@ export class ListKitScreen extends React.Component<Props> {
                         data={kits}
                         keyExtractor={(item: any) => item.CodeKit}
                         legacyImplementation={true}
-                        renderItem={this._renderItem.bind(this)}>
+                        renderItem={this._renderItem.bind(this)}
+                        >
 
                     </FlatList>
                 </View>

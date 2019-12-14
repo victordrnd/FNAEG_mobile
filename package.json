@@ -23,7 +23,7 @@
     "react-native": "0.61.4",
     "react-native-actionsheet": "^2.4.2",
     "react-native-base64": "^0.0.2",
-    "react-native-chart-kit": "^3.13.0",
+    "react-native-chart-kit": "^4.1.0",
     "react-native-elements": "^1.2.7",
     "react-native-form-validator": "^0.3.2",
     "react-native-gesture-handler": "^1.0.0",

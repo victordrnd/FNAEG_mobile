@@ -23,11 +23,16 @@ export class ListInventaireScreen extends React.Component<Props> {
     state = {
         inventaires: []
     }
+    refreshing = false;
     componentDidMount() {
+       this.getInventaires()
+    }
+    getInventaires(){
+        this.setState({refreshing : true});
         InventaireService.getAll()
-            .then(inventaires => {
-                this.setState({ inventaires: inventaires });
-            });
+        .then(inventaires => {
+            this.setState({ inventaires: inventaires, refreshing : false });
+        });
     }
 
     render() {
@@ -44,7 +49,9 @@ export class ListInventaireScreen extends React.Component<Props> {
                         keyExtractor={(item: any) => item.id}
                         legacyImplementation={true}
                         renderItem={this._renderItem.bind(this)}
-                        style={{ marginBottom: 50 }}>
+                        style={{ marginBottom: 50 }}
+                        onRefresh={() =>this.getInventaires()}
+                        refreshing={this.refreshing}>
                     </FlatList>
                 </View>
             </View>
@@ -82,7 +89,7 @@ export class ListInventaireScreen extends React.Component<Props> {
 
             <List.Item
                 title={`Inventaire #${item.id}`}
-                description={`${date.toLocaleDateString()} à ${date.getHours()}h${date.getMinutes()}`}
+                description={`${item.last_update}`}
                 right={() => <Text style={[styles.listText, { marginVertical: 15 }]}>Victor</Text>}
                 left={() => <Badge visible style={{ marginVertical: 15, backgroundColor: "#d8a864", color: "#fff" }}>{item.enregistrements.length}</Badge>}
                 titleStyle={styles.listTitle}
