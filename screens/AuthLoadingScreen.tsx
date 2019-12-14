@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, Image, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import LottieView from 'lottie-react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 interface NavigationParams {
     my_param: string; 
 }
@@ -21,7 +22,19 @@ export class AuthLoadingScreen extends Component<Props> {
     
     componentDidMount() {
         this.animation.play(60);
-        setTimeout(() =>{this.props.navigation.navigate('Home')}, 2500)
+        setTimeout(() =>{this.checkIntro()}, 2500)
+    }
+
+
+    checkIntro(){
+        AsyncStorage.getItem('@introDone').then(res => {
+            res = JSON.parse(res);
+            if(!res){
+              this.props.navigation.navigate('IntroScreen', {});
+            }else{
+                this.props.navigation.navigate('Home') 
+            }
+          })
     }
 
 

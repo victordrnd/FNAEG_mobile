@@ -1,6 +1,5 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
-import { Image, View, Dimensions, StatusBar } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { Transition } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Feather';
@@ -17,8 +16,11 @@ import { ListKitScreen } from './screens/ListKitsScreen';
 import {InventaireSuccess} from './screens/inventaire/InventaireSuccess'
 import {ListInventaireScreen} from './screens/inventaire/ListInventaireScreen';
 import {DetailInventaireScreen} from './screens/inventaire/DetailInventaireScreen';
+import IntroScreen from './screens/IntroScreen';
 export default class App extends React.Component {
-
+  componentDidMount(){
+    
+  }
 
   render() {
     return (
@@ -92,10 +94,11 @@ const theme = {
 };
 
 const HomeNavigator = createStackNavigator({
+  IntroScreen : IntroScreen,
   App : bottomTabNavigator,
   Compteur : CompteurScreen,
   InventaireSuccess : InventaireSuccess,
-  DetailInventaire : DetailInventaireScreen
+  DetailInventaire : DetailInventaireScreen,
 },{
   headerMode :'none'
 })
