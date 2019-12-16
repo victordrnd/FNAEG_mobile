@@ -24,7 +24,7 @@ class KitService {
 
 
     async exportToXML(kits: Array<any>) {
-        let xml = "<Kits>\n"
+        let xml = `<?xml version="1.0"?>\n<Kits>\n`
         for (const kit of kits) {
             let xmlKit = `<Kit CodeKit="${kit.CodeKit}" Stock="${kit.Stock}"/>\n`;
             xml += xmlKit
