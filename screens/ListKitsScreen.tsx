@@ -24,7 +24,7 @@ export class ListKitScreen extends React.Component<Props> {
     state = {
         kits: []
     }
-    componentDidMount() {
+     componentDidMount() {
         KitService.getAllKit((kits : Kit) => {
             this.setState({kits : kits});
         });

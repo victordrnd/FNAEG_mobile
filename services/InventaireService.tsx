@@ -1,11 +1,12 @@
 import axios, { AxiosInstance } from 'axios';
 import environment from '../environments/environment';
+import Service from './Service';
 
 class InventaireService {
 
     http: AxiosInstance;
     constructor() {
-        this.http = axios;
+        this.http = Service.getInstance();
     }
 
 

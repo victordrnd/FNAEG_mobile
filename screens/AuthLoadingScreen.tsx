@@ -3,6 +3,7 @@ import { Dimensions, Image, StatusBar, StyleSheet, View, Text } from 'react-nati
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import LottieView from 'lottie-react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import Service from '../services/Service';
 interface NavigationParams {
     my_param: string; 
 }
@@ -27,12 +28,13 @@ export class AuthLoadingScreen extends Component<Props> {
 
 
     checkIntro(){
-        AsyncStorage.getItem('@introDone').then(res => {
+        AsyncStorage.getItem('@introDone').then(async res => {
             res = JSON.parse(res);
-            if(!res){
-              this.props.navigation.navigate('IntroScreen', {});
+            if(res){
+                let userToken = Service.token;
+                this.props.navigation.navigate(userToken ? 'Home' : 'Login');
             }else{
-                this.props.navigation.navigate('Home') 
+                this.props.navigation.navigate('IntroScreen', {});
             }
           })
     }

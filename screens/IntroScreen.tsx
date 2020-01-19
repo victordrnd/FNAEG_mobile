@@ -51,7 +51,7 @@ export default class IntroScreen extends React.Component {
     }
     _onDone = () => {
         AsyncStorage.setItem('@introDone', JSON.stringify(true))
-        NavigationService.navigate('App', {});
+        NavigationService.navigate('Login', {});
     }
     render() {
         return (

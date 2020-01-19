@@ -16,10 +16,18 @@ import { ListKitScreen } from './screens/ListKitsScreen';
 import {InventaireSuccess} from './screens/inventaire/InventaireSuccess'
 import {ListInventaireScreen} from './screens/inventaire/ListInventaireScreen';
 import {DetailInventaireScreen} from './screens/inventaire/DetailInventaireScreen';
+import Service from './services/Service';
+import UserService from './services/UserService';
 import IntroScreen from './screens/IntroScreen';
+import AsyncStorage from '@react-native-community/async-storage';
+import {LoginScreen} from './screens/LoginScreen'; 
 export default class App extends React.Component {
-  componentDidMount(){
-    
+  async componentDidMount(){
+    await AsyncStorage.getItem('@token').then( async (token) => {
+      UserService.tokenSubject.next(token);
+      Service.token = token;
+      await UserService.populate();
+    });
   }
 
   render() {
@@ -93,9 +101,16 @@ const theme = {
   },
 };
 
+const AuthenticationNavigator = createStackNavigator({
+  Login : LoginScreen
+},
+{
+  headerMode :'none'
+})
+
 const HomeNavigator = createStackNavigator({
-  IntroScreen : IntroScreen,
   App : bottomTabNavigator,
+  IntroScreen : IntroScreen,
   Compteur : CompteurScreen,
   InventaireSuccess : InventaireSuccess,
   DetailInventaire : DetailInventaireScreen,
@@ -106,7 +121,8 @@ const HomeNavigator = createStackNavigator({
 AppNavigator = createAppContainer(createAnimatedSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
-    App: HomeNavigator
+    App: HomeNavigator,
+    Login : AuthenticationNavigator
   },
   {
     initialRouteName: 'AuthLoading',

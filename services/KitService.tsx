@@ -3,12 +3,13 @@ import environment from '../environments/environment';
 import Share from 'react-native-share';
 import base64 from 'react-native-base64';
 import Kit from '../core/models/kit';
+import Service from './Service';
 
 class KitService {
 
     http: AxiosInstance;
     constructor() {
-        this.http = axios;
+        this.http = Service.getInstance();
     }
 
 
