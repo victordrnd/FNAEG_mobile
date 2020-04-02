@@ -31,6 +31,11 @@ export class ListKitScreen extends React.Component<Props> {
         // this.state.kits.map((kit : Kit) => kit.done = false)
     }
 
+    _reset(){
+        this.state.kits.map((kit : Kit) => kit.Stock = 0);
+        this.setState({kits : this.state.kits});
+    }
+
 
     _onPress(){
         const notDone = this.state.kits.find((el : Kit) => !el.done);
@@ -64,8 +69,9 @@ export class ListKitScreen extends React.Component<Props> {
                 <StatusBar backgroundColor='#f1f3f6' barStyle='dark-content'></StatusBar>
                 <Header
                 title="Inventaire des kits"
+                left={<Icon name="refresh-cw" size={20} color="#000" style={styles2.refresh} onPress={() => this._reset()}></Icon>}
                 right={<Icon name="save" size={20} color="#000" style={styles2.validate} onPress={() => this._onPress()}></Icon>}></Header>
-                <View style={{ paddingHorizontal: 15, marginTop: 140 }}>
+                <View style={{ paddingHorizontal: 15, marginTop: 140, marginBottom : 50 }}>
 
                     <FlatList
                         data={kits}
@@ -144,6 +150,14 @@ const styles2 = StyleSheet.create({
         borderRadius: 20,
         padding: 7,
         elevation: 3
+    },
+    refresh: {
+        alignSelf: "flex-start",
+        marginTop: 30,
+        marginLeft: 30,
+        backgroundColor: "transparent",
+        
+        padding: 7,
     },
     iconButton: {
         backgroundColor: "#fff",

@@ -34,7 +34,6 @@ export class InventaireSuccess extends React.Component<Props> {
     option = [
         'Export serveur',
         'Export XML',
-        'Export JSON',
         'Annuler'
     ]
 
@@ -77,7 +76,7 @@ export class InventaireSuccess extends React.Component<Props> {
                     ref={o => (this.ActionSheet = o)}
                     title={'Exporter vers'}
                     options={this.option}
-                    cancelButtonIndex={3}
+                    cancelButtonIndex={2}
                     onPress={index => this.switchIndex(index)}
                 />
                 <Button title="Exporter" icon={<Icon name="share" color="#fff" size={18}></Icon>}
